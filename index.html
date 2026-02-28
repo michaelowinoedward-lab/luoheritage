@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Luo Heritage</title>
+    <style>
+        body {
+            background:#0f172a;
+            color:white;
+            font-family:Arial;
+            text-align:center;
+        }
+
+        .card {
+            background:#1e293b;
+            padding:20px;
+            margin:20px auto;
+            width:400px;
+            border-radius:10px;
+        }
+
+        img {
+            max-width:300px;
+            border-radius:8px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Luo Heritage Stories</h1>
+
+<div id="stories"></div>
+
+<script>
+
+async function loadStories(){
+
+    const res = await fetch("http://localhost:3000/articles");
+    const data = await res.json();
+
+    let html="";
+
+    data.forEach(story=>{
+        html += `
+            <div class="card">
+                <h3>${story.title}</h3>
+                <p>${story.content}</p>
+                <small>By ${story.author}</small>
+                ${story.image ? `<img src="${story.image}">` : ""}
+            </div>
+        `;
+    });
+
+    document.getElementById("stories").innerHTML = html;
+}
+
+loadStories();
+
+</script>
+
+</body>
+</html>
